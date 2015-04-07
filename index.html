@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Base</title>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="app.js"></script>
+</head>
+<body ng-app="JoesApp" ng-controller="JoesController">
+
+    <form name="paymentForm" ng-submit="paymentForm.$valid && submitPayment(card)">
+
+        <error ng-show="paymentForm.$valid">{{ message }}</error>
+        <error ng-show="paymentForm.$submitted && paymentForm.creditCardNumber.$invalid">Credit card number is not valid.</error>
+        Card Number: <input name="creditCardNumber" required ng-pattern="/^[0-9]*$/" type="text" ng-model="card.number" /><br />
+
+        Card Type:
+        <select ng-model="card.type" required>
+            <option>Visa</option>
+            <option>MasterCard</option>
+            <option>Discover</option>
+            <option>Joe Express</option>
+        </select><br />
+
+        CCV:
+        <error ng-show="paymentForm.ccvField.$touched && paymentForm.ccvField.$error.minlength">CCV must contain at least 3 characters.</error><br />
+        <error ng-show="paymentForm.ccvField.$touched && paymentForm.ccvField.$error.pattern">CCV must only contain numbers.</error><br />
+        <input name="ccvField" type="text" required ng-pattern="/^[0-9]*$/" ng-minlength="3" ng-maxlength="4" placeholder="Enter your CCV" ng-model="card.ccv" />
+
+        <br /><button>Submit Payment</button>
+
+    </form>
+
+</body>
+</html>
